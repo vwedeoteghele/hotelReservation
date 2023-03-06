@@ -2,6 +2,7 @@ package api;
 
 import model.Customer;
 import model.IRoom;
+import model.RoomType;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -24,6 +25,10 @@ public class AdminResource {
         for(IRoom room : rooms) {
             reservationService.addRoom(room);
         }
+    }
+    public IRoom addSingleRoom(String roomNumber, Double price, RoomType enumeration) {
+        IRoom room = reservationService.createRoom(roomNumber, price, enumeration);
+        return room;
     }
 
     public Collection<IRoom> getAllRooms() {

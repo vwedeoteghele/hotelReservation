@@ -3,7 +3,11 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -13,8 +17,8 @@ public class MainMenu {
         menu();
     }
 
-    private void menu() {
-        System.out.println("Select a number");
+    private void menu() throws ParseException {
+        System.out.println("select an option from admin menu(0 - 5): ");
         System.out.println("1. Find and reserve a room");
         System.out.println("2. See my reservations");
         System.out.println("3. Create an account");
@@ -42,10 +46,12 @@ public class MainMenu {
     }
 
     private void exit() {
+        System.out.println("Goodbye!");
+        System.exit(0);
     }
 
     private void adminMenu() {
-
+        new AdminMenu();
     }
 
     private void createAccount() {
@@ -77,7 +83,7 @@ public class MainMenu {
         }
     }
 
-    private void reserveRoom() {
+    private void reserveRoom() throws ParseException {
         //email, room, checkIn, checkOut
         //find all available rooms
         //print out all available rooms
@@ -86,7 +92,24 @@ public class MainMenu {
         //print customer reservations
         System.out.println("Enter your email: ");
         String email = scanner.nextLine();
-        Collection<IRoom> findRooms = hotelResource.findARoom();
+        System.out.println("Enter checkIn Date: ");
+        String checkInDateInString = scanner.nextLine();
+        System.out.println("Enter checkOut Date: ");
+        String checkOutDateInString = scanner.nextLine();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
+//        String DateInString = "7-Jun-2013";
+        Date checkIn = formatter.parse(checkInDateInString);
+        Date checkOut = formatter.parse(checkOutDateInString);
+        Collection<IRoom> findRooms = hotelResource.findARoom(checkIn, checkOut);
+
+        for(IRoom room : findRooms) {
+            System.out.println(room);
+        }
+        System.out.println("Enter a room Number: ");
+        String roomNumber = scanner.nextLine();
+        IRoom room = hotelResource.getRoom(roomNumber);
+        Reservation reservation = hotelResource.bookARoom(email, room, checkIn, checkOut);
+        System.out.println(reservation);
     }
 }

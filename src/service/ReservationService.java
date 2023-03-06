@@ -1,9 +1,6 @@
 package service;
 
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
-import model.Room;
+import model.*;
 
 import java.util.*;
 
@@ -22,6 +19,11 @@ public class ReservationService {
     }
     public IRoom getARoom(String roomId) {
         return rooms.get(roomId);
+    }
+    public IRoom createRoom(String roomNumber, Double price, RoomType enumeration) {
+        IRoom room = new Room(roomNumber, price, enumeration);
+        addRoom(room);
+        return room;
     }
     public Collection<IRoom> getAllRooms() {
         return rooms.values();
