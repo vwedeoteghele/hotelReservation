@@ -38,7 +38,10 @@ public class HotelResource {
     }
     public Collection<Reservation> getCustomersReservation(String customerEmail) {
         Customer customer = customerService.getCustomer(customerEmail);
+        System.out.println(customer);
+        System.out.println(reservationService.getCustomersReservation(customer));
         return reservationService.getCustomersReservation(customer);
+
     }
     public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
         return reservationService.findRooms(checkIn, checkOut);

@@ -39,7 +39,7 @@ public class ReservationService {
         }
 
         customerReservations.add(reservation);
-        reservations.put(customer.getEmail(),customerReservations));
+        reservations.put(customer.getEmail(),customerReservations);
 
         return reservation;
 

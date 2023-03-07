@@ -26,7 +26,15 @@ public class AdminResource {
             reservationService.addRoom(room);
         }
     }
-    public IRoom addSingleRoom(String roomNumber, Double price, RoomType enumeration) {
+    public IRoom addSingleRoom(String roomNumber, Double price, int size) {
+        RoomType enumeration;
+        if(size == 1) {
+            enumeration = RoomType.SINGLE;
+        } else if(size == 2) {
+            enumeration = RoomType.DOUBLE;
+        } else {
+            throw new IllegalArgumentException("Only accept 1 or 2 as input");
+        }
         IRoom room = reservationService.createRoom(roomNumber, price, enumeration);
         return room;
     }
