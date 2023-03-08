@@ -67,6 +67,7 @@ public class ReservationService {
          * return  the available ones
          * */
         final Collection<Reservation> allReservation = getAllReservation();
+//        System.out.println(allReservation);
         final Collection<IRoom> roomsNotAvailable = new ArrayList<IRoom>();
         final Collection<IRoom> availableRooms = new ArrayList<>();
         for(Reservation reservation : allReservation) {
@@ -76,14 +77,24 @@ public class ReservationService {
             }
         }
 
-        for(IRoom room : rooms.values()) {
+
+        for(IRoom room: rooms.values()) {
+            boolean found = false;
+
             for(IRoom roomNotAvailable : roomsNotAvailable) {
-                if(room.getRoomNumber() != roomNotAvailable.getRoomNumber()) {
-                    availableRooms.add(room);
+                if(room.getRoomNumber() == roomNotAvailable.getRoomNumber()) {
+                  found = true;
+                  break;
                 }
+            }
+            if(!found) {
+                availableRooms.add(room);
             }
         }
 
+        System.out.println(rooms.values());
+
+//        System.out.println(availableRooms);
         return availableRooms;
 
     }

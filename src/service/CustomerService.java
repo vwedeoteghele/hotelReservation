@@ -17,7 +17,10 @@ public class CustomerService {
     public static CustomerService getSingleton() {
         return SINGLETON;
     }
-    public void addCustomer(String email, String firstName, String lastName) {
+    public void addCustomer(String email, String firstName, String lastName) throws Exception {
+        if(customers.get(email) != null) {
+            throw new Exception("Customer already exists");
+        }
         Customer customer = new Customer(firstName, lastName, email);
         customers.put(email, customer);
     }

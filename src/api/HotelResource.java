@@ -25,7 +25,7 @@ public class HotelResource {
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
-    public void createACustomer(String email, String firstName, String lastName) {
+    public void createACustomer(String email, String firstName, String lastName) throws Exception {
         customerService.addCustomer(email, firstName, lastName);
     }
     public IRoom getRoom(String roomNumber) {
@@ -38,7 +38,8 @@ public class HotelResource {
     }
     public Collection<Reservation> getCustomersReservation(String customerEmail) {
         Customer customer = customerService.getCustomer(customerEmail);
-        System.out.println(customer);
+//        System.out.println("got here hResource");
+//        System.out.println(customer);
         System.out.println(reservationService.getCustomersReservation(customer));
         return reservationService.getCustomersReservation(customer);
 

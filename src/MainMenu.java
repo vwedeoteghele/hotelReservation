@@ -68,6 +68,7 @@ public class MainMenu {
     private void createAccount() {
         try {
 //            scanner.nextLine();
+            System.out.println("Enter details to create account");
             System.out.println("Email: ");
             String email = scanner.nextLine();
             System.out.println("first name: ");
@@ -88,8 +89,11 @@ public class MainMenu {
 
     private void myReservations() throws ParseException {
         try {
+            scanner.nextLine();
             System.out.println("Enter your email: ");
             String email = scanner.nextLine();
+            System.out.println("got here main menu");
+            System.out.println(email);
             Collection<Reservation> customerReservations = hotelResource.getCustomersReservation(email);
             if(customerReservations.isEmpty()) {
                 System.out.println("You do not have any reservations");
@@ -113,13 +117,13 @@ public class MainMenu {
             scanner.nextLine();
             System.out.println("Do you already have an account (Y / N): ");
             String hasAccount = scanner.nextLine().toUpperCase();
-            System.out.println(hasAccount.startsWith("N"));
             if(hasAccount.startsWith("N")) {
                 createAccount();
             }
 
             System.out.println("Enter your email: ");
             String email = scanner.nextLine();
+            System.out.println(email);
             System.out.println("Enter checkIn Date: ");
             String checkInDateInString = scanner.nextLine();
             System.out.println("Enter checkOut Date: ");
@@ -130,10 +134,15 @@ public class MainMenu {
             Date checkIn = formatter.parse(checkInDateInString);
             Date checkOut = formatter.parse(checkOutDateInString);
             Collection<IRoom> findRooms = hotelResource.findARoom(checkIn, checkOut);
-
-            for(IRoom room : findRooms) {
-                System.out.println(room);
+            if(findRooms.isEmpty()) {
+                System.out.println("There are no rooms available for this time period");
+                menu();
+            } else {
+                for(IRoom room : findRooms) {
+                    System.out.println(room);
+                }
             }
+
             System.out.println("Enter a room Number: ");
             String roomNumber = scanner.nextLine();
             IRoom room = hotelResource.getRoom(roomNumber);
